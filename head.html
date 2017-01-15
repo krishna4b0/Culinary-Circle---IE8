@@ -1,0 +1,114 @@
+<sly data-sly-use.head="privatebrands/components/content/utils/head.js" data-sly-use.siteConfig="com.svu.privatebrands.components.SiteConfiguration">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="${head.keywords}">
+    <meta name="description" content="${head.description}">
+	 <meta name="title" content="${properties.jcr:title || properties.pageTitle}">
+		<!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+	 
+	
+    <!--/*
+    FACEBOOK META TAGS. We want this tags to appear only for view recipe page and the values have to be dynamic
+*/-->
+    <div data-sly-use.custutil="privatebrands/components/content/utils/CustomUtils.js" data-sly-unwrap>
+        <sly data-sly-test="${custutil.template == '/apps/privatebrands/templates/viewrecipepage'}" data-sly-use.recipeuse="com.svu.privatebrands.components.ViewRecipeUse">
+            <meta property="fb:app_id" content="${recipeuse.siteConfiguration.fbappid}" />
+            <meta property="og:url" content="${request.getRequestURL.toString}" />
+            <meta property="og:type" content="article" />
+            <meta property="og:title" content="${recipeuse.recipe.name}" />
+            <meta property="og:description" content="${recipeuse.recipe.subTitle}" />
+            <sly data-sly-test.imageExist="${recipeuse.recipe.media[0].url}">
+                <meta property="og:image" content="${recipeuse.siteConfiguration.recdampath}/${recipeuse.recipe.media[0].url}.jpg" />
+            </sly>
+            <sly data-sly-test="${!imageExist}">
+                <meta property="og:image" content="${recipeuse.siteConfiguration.recdampath}/default.png" />
+            </sly>
+        </sly>
+    </div>
+    <!--/*
+<div data-sly-use.custutil="privatebrands/components/content/utils/CustomUtils.js" data-sly-unwrap>
+    <meta name="${custutil.template}" content="test meta tag" />
+</div> */-->
+
+
+
+
+    <div data-sly-use.clientLib="${'/libs/granite/sightly/templates/clientlib.html'}" data-sly-unwrap>
+        <div data-sly-include="/libs/wcm/core/components/init/init.jsp" data-sly-unwrap></div>
+        <div data-sly-include="/libs/wcm/mobile/components/simulator/simulator.jsp" data-sly-unwrap></div>
+
+        <div data-sly-include="headlibs.html" data-sly-unwrap></div>
+        <csrftoken data-sly-call="${clientLib.all @ categories='granite.csrf.standalone'}" data-sly-unwrap />
+			
+        <css data-sly-call="${clientLib.all @ categories='privatebrands.culinarycircle'}" data-sly-unwrap />
+		
+        <div data-sly-use.siteConfig="com.svu.privatebrands.components.SiteConfiguration" data-sly-unwrap>
+            <link rel="icon" type="image/x-icon" href="${siteConfig.siteDesignPath}/favicon.ico">
+            <link rel="shortcut icon" type="image/x-icon" href="${siteConfig.siteDesignPath}/favicon.ico">
+            <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+        </div>
+	
+
+		<!--[if lt IE 9]>
+		<script>
+				testing();
+				function testing(){
+					 if (document.cookie.indexOf("visited") >= 0) {
+				    
+					document.getElementById('window').style.display='none';
+					}
+						else{
+						
+						}
+					};
+		</script>
+		
+	    <div id="window"> 
+		
+					<p style="margin-left:10px;color:black;">For the best Culinary Circle website experience we recommend that you upgrade to the latest version of Internet Explorer or use an alternate browser.</p>  
+    		               
+  
+   		                 <button id="show">Find Out How</button>
+    	                  <button id="exit">Proceed Using Current Browser</button> 
+		         <script>
+						  var dialog = document.getElementById('window');      
+		 document.getElementById('show').onclick=function(){
+		   window.open('/content/privatebrands/culinarycircle/en/browser-page.html',"_self");
+		 };  
+		document.getElementById('exit').onclick = function(){  
+			document.getElementById("window").style.display='none'; 
+			};
+				
+					testing();
+					 var cookieExpiry = new Date();
+                cookieExpiry.setTime(cookieExpiry.getTime() + (8 * 3600 * 1000)); // 8 hours
+                document.cookie = "visited=yes; expires=" + cookieExpiry.toGMTString();
+                
+			 </script>
+		</div>
+		
+		<![endif]-->
+	
+		
+	
+		
+		
+        <title>
+            <sly data-sly-test.pagetitle="${currentPage.pageTitle}"> ${currentPage.pageTitle} </sly>
+            <sly data-sly-test="${!pagetitle}"> ${currentPage.getTitle } | ${siteConfig.siteConfiguration.bannername} </sly>
+        </title>
+
+        <!--/*The following is needed to make things better on IE8*/-->
+          <!--[if lt IE 9]>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+  <script src="//s3.amazonaws.com/nwapi/nwmatcher/nwmatcher-1.2.5-min.js"></script>
+  <script src="//html5base.googlecode.com/svn-history/r38/trunk/js/selectivizr-1.0.3b.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.1.0/respond.min.js"></script>
+<![endif]-->
+
+      
+        <div data-sly-include="redirect.jsp" /></div>
+</sly>
